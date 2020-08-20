@@ -44,6 +44,8 @@
                             this.token=res.data.token
                             localStorage.setItem("token",res.data.token)
                             localStorage.setItem("username",res.data.username)
+                            this.$store.commit("SaveUserInfo",res.data)
+                            console.log("this.$store.getters.getUserInfo:===",this.$store.getters.getUserInfo);
 
                             this.$message.success("登录成功！")
                             this.$router.replace("/")

@@ -7,11 +7,6 @@ Vue.use(VueRouter)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-// const routerPush = VueRouter.prototype.push
-// VueRouter.prototype.push = function push(location) {
-//   return routerPush.call(this, location).catch(error=> error)
-// }
-
 import Home from '../views/home/Home.vue'
 import el from "element-ui/src/locale/lang/el";
 
@@ -19,7 +14,21 @@ import el from "element-ui/src/locale/lang/el";
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    redirect:"/wall",
+    children:[
+    {
+      path:"/wall",
+      name:"wall",
+      component:()=>import("@/views/wall/wall")
+    },
+    {
+      path:"/profile",
+      name:"profile",
+      component:()=>import("@/views/profile/profile")
+    }
+
+    ]
   },
   {
     path: '/login',
@@ -40,18 +49,6 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from,next)=>{
-  console.log("to name:",to.name,"from:",from.name,next)
-  // if (to.name!="login" || to.name!="register"){
-  //   let token=localStorage.getItem("token")
-  //   console.log(token)
-  //   if (token==null){
-  //     next("/login")
-  //   }else {
-  //     next()
-  //   }
-  // }else {
-  //   next()
-  // }
   if (to.name==="login" || to.name==="register"){
     next()
     return

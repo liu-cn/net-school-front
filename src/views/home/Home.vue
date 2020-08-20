@@ -12,35 +12,12 @@
         </el-aside>
         <el-container>
           <el-main class="Main">
+          <router-view/>
 
-            <div class="content">
-              <el-row class="one">
-                <el-col :span="24">
-                  <el-card class="box-card">
-                    <div slot="header" class="clearfix">
-                      <span>表白墙</span>
-                      <el-button style="float: right; padding: 3px 0" @click="submit520()" type="text">表白</el-button>
-                    </div>
 
-                    <!--对话框-->
-                    <dialog-love/>
-                    <div v-for="(i,v) in wallContentList" :key="v" class="text item">
-                      <el-alert
-                              class="alert-item"
-                              :title="i.Content"
-                              type="success">
-                      </el-alert>
-                    </div>
-                  </el-card>
-                </el-col>
-              </el-row>
-            </div>
-            <div class="right">
-
-            </div>
 
           </el-main>
-          <el-footer class="Footer">Footer</el-footer>
+<!--          <el-footer class="Footer">Footer</el-footer>-->
         </el-container>
       </el-container>
     </el-container>
@@ -49,7 +26,7 @@
 
 <script>
 import axios from "axios"
-import dialogLove from "@/views/home/dialogLove/dialogLove";
+import dialogLove from "@/views/wall/dialogLove/dialogLove";
 export default {
   name: 'Home',
   components:{
@@ -60,30 +37,14 @@ export default {
       wallContentList:[]
     }
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       localStorage.removeItem("token")
       localStorage.removeItem("username")
       this.$router.replace("/login")
       this.$message.success("退出登陆！")    //退出登录后，删除本地token，并跳转到login页面。
-    },
-    submit520(){
-      // this.centerDialogVisible = true
-      this.$bus.$emit("submit520")
-    },
-
-  },
-  mounted() {
-    axios.post("http://localhost:8080/api/wall",{
-      token:localStorage.getItem("token")
-    }).then((res)=>{
-      console.log(res);
-      this.wallContentList=res.data.wallContentList
-    })
-    this.$emit("CommitOk",(commitData)=>{
-      console.log(commitData)
-    })
-  },
+    }
+  }
 }
 </script>
 <style scoped>
@@ -104,22 +65,5 @@ export default {
   .Footer{
     background-color: aqua;
   }
-  .list{
-    height: 100%;
-  }
-  .alert-item{
-    margin: 10px 0px;
-    box-shadow: 0px 0px 8px #333333;
-  }
-  .content{
-    width: 80%;
-  }
-  .right{
-    position: absolute;
-    top: 10px;
-    right: 0px;
-    bottom: 0px;
-    width: 15%;
-    background-color: #FFCC99;
-  }
+
 </style>

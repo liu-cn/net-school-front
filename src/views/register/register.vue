@@ -48,11 +48,23 @@ export default {
         if (res.data.registerStatus ==="ok"){
           let token = res.data.token
           let username =res.data.username
+          let phone =res.data.phone
           // let username
           localStorage.setItem("token",token)
           localStorage.setItem("username",username)
+          localStorage.setItem("phone",phone)
+          this.$store.commit("SaveUserInfo",res.data)
+          console.log(this.$store.getters.getUserInfo);
           this.$router.replace("/")
           this.$message.success("登录成功！")
+        }else {
+          if (res.data.msg==="账号已经被注册！"){
+            this.$message.error("账号已被注册！")
+          }else if (res.data.msg==="手机号已经被注册！"){
+            this.$message.error("手机号已被注册！")
+          }else{
+            this.$message.error("服务器出错！")
+          }
         }
 
       })
