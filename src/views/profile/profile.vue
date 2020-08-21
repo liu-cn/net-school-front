@@ -5,7 +5,7 @@
     <div class="userCount">账号：{{user.username}}</div>
     <div class="Age">年龄：{{user.age}}</div>
     <div class="Profile">简介：{{user.profile}}</div>
-    <div class="Profile">简介：{{user.phone}}</div>
+    <div class="Profile">手机号：{{user.phone}}</div>
   </div>
 
 
@@ -31,14 +31,13 @@ name: "profile",
   methods: {
     getUserInfo() {
       //刷新网页vuex数据会丢失，判断vuex是否有数据，如果没有去localStorage取数据。
-      let username=this.$store.state.userInfo.username===undefined?localStorage.getItem("username"):this.$store.state.userInfo
+      let username=this.$store.state.userInfo.username===undefined?localStorage.getItem("username"):this.$store.state.userInfo.username
+      console.log("username:======",username);
       this.$ajax.post("http://localhost:8080/GetUserInfo",{
         username:username
       }).then((res)=>{
         console.log(res);
         let userInfo=res.data
-
-        // ({ this.user:{}}= userInfo)
 
         this.user.nickname=userInfo.nickname
         this.user.gender=userInfo.gender

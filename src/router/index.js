@@ -7,16 +7,22 @@ Vue.use(VueRouter)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-import Home from '../views/home/Home.vue'
+import layout from '../components/layout/layout'
+import home from "@/views/home/Home"
 import el from "element-ui/src/locale/lang/el";
 
   const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-    redirect:"/wall",
+    name: 'layout',
+    component: layout,
+    redirect:"/home",
     children:[
+     {
+        path:"/home",
+        name:"home",
+        component:home,
+     },
     {
       path:"/wall",
       name:"wall",
@@ -26,8 +32,37 @@ import el from "element-ui/src/locale/lang/el";
       path:"/profile",
       name:"profile",
       component:()=>import("@/views/profile/profile")
+    },
+    {
+      path:"/publish",
+      name:"publish",
+      component:()=>import("@/views/publish/publish")
+    },
+    {
+      path:"/works",
+      name:"works",
+      component:()=>import("@/views/works/works")
+    },
+    {
+      path:"/community",
+      name:"community",
+      component:()=>import("@/views/community/community")
+    },
+    {
+      path:"/study",
+      name:"study",
+      component:()=>import("@/views/study/study")
+    },
+    {
+      path: "/test",
+      name: "test",
+      component: ()=>import("@/views/test/test")
+    },
+    {
+      path: "/friends",
+      name: "friends",
+      component: ()=>import("@/views/friends/friends")
     }
-
     ]
   },
   {
